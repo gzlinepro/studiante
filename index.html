@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Mi Proyecto — Plantilla limpia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0b1220">
+
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Si quieres mantener estilos extra en un archivo separado, descomenta:
+  <link rel="stylesheet" href="extra.css">
+  -->
+</head>
+<body class="auth-active">
+
+<!-- AUTH SCREEN: reemplazado para mostrarse por defecto -->
+<div id="authScreen">
+  <div class="auth-bg"></div>
+
+  <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+<div class="auth-logo">
+  <img src="https://iili.io/KhAlzhP.png" alt="Logo UNHEVAL" class="logo-img" />
+  <h2 id="authTitle">Iniciar sesión</h2>
+  <p class="auth-subtitle">Plataforma de estudiantes</p>
+</div>
+
+
+
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="auth-form" novalidate>
+      <!-- Email field with icon -->
+      <label for="authEmail">Email</label>
+      <div class="input-wrap">
+        <!-- correo SVG -->
+        <span class="input-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M21 6.5L12 13 3 6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <input type="email" id="authEmail" placeholder="tu@correo.com" required autocomplete="email" />
+        <button type="button" class="clear-btn" id="clearEmail" title="Limpiar correo" aria-label="Limpiar correo" hidden>×</button>
+      </div>
+
+      <!-- Password field with icon + show/hide -->
+      <label for="authPassword">Contraseña</label>
+      <div class="input-wrap">
+        <!-- candado SVG -->
+        <span class="input-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="10" rx="2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <path d="M7 11V8a5 5 0 0 1 10 0v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+
+        <input type="password" id="authPassword" placeholder="••••••••" required autocomplete="current-password" />
+        <button type="button" class="toggle-pass" id="togglePass" aria-label="Mostrar contraseña" aria-pressed="false">
+          <!-- eye SVG (will toggle to eye-off via CSS class) -->
+          <svg class="eye-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></circle>
+          </svg>
+        </button>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button type="submit" class="btn primary" id="loginSubmit">Ingresar</button>
+        <button type="button" class="btn secondary" id="changePasswordBtn">Cambiar contraseña</button>
+      </div>
+
+
+    </form>
+
+    <!-- RESET / CHANGE PASSWORD area (se muestra al pedir cambio) -->
+    <form id="resetForm" class="auth-form" style="display:none;margin-top:10px" novalidate>
+      <label for="resetEmail">Ingresa tu correo para cambiar contraseña</label>
+      <div class="input-wrap">
+        <span class="input-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M21 6.5L12 13 3 6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+        <input type="email" id="resetEmail" placeholder="tu@correo.com" required autocomplete="email" />
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button type="button" class="btn primary" id="sendResetBtn">Enviar enlace</button>
+        <button type="button" class="btn secondary" id="cancelResetBtn">Cancelar</button>
+      </div>
+    </form>
+
+    <div style="margin-top:12px;font-size:12px;color:var(--muted);text-align:center">
+      <small>Derechos reservados.</small>
+    </div>
+  </div>
+
+
+
+  </div>
+  
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+      <h1>Las fijas - UNHEVAL</h1>
+    </div>
+
+
+<div class="top-icons">
+  <i class="fas fa-home" id="homeIcon"></i>
+  <i class="fas fa-users" id="onlineUsersIcon" title="Usuarios en línea"></i>
+
+  <!-- icono Mensajes + BADGE (moved here) -->
+  <div class="icon-with-badge" title="Mensajes" style="position:relative;display:inline-flex;align-items:center;">
+    <i class="far fa-comment" id="messagesIcon" aria-hidden="false" aria-label="Mensajes"></i>
+    <span id="msgBadge" class="badge" aria-hidden="true" style="display:none">0</span>
+  </div>
+
+  <div class="profile-icon" id="profileIcon" title="Editar perfil">
+    <i class="fas fa-user" id="profilePlaceholder" style="color:var(--duo-dark)"></i>
+    <img id="profileImg" alt="" style="display:none">
+    <!-- NOTE: removed previous msgBadge from here -->
+  </div>
+</div>
+
+
+
+
+  </div>
+
+
+
+
+<!-- Notification balloon (inserta dentro del top-bar o justo después) -->
+<div class="notif-balloon" id="notifBalloon" aria-live="polite" role="status">
+  <div class="card" id="notifCard">
+    <div class="msg" id="notifText">Tienes una solicitud</div>
+    <div class="actions" id="notifActions"></div>
+  </div>
+</div>
+
+
+
+
+  <!-- Drawer -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="drawer-avatar" id="drawerAvatar"><img id="drawerAvatarImg" alt=""></div>
+      <div>
+        <div><strong id="drawerName">Cargando...</strong></div>
+        <div style="font-size:13px; color:#666;" id="drawerCareer">...</div>
+      </div>
+    </div>
+    <ul class="drawer-menu">
+      <li id="drawerProfile"><i class="fas fa-user"></i> Mi perfil</li>
+            <li id="drawerSettings"><i class="fas fa-cog"></i> Configuración</li>
+      <li id="drawerAchievements"><i class="fas fa-trophy"></i> Logros (ver en Inicio)</li>
+      <li id="drawerRanking"><i class="fas fa-chart-line"></i> Ranking</li>
+      <li id="drawerFriends"><i class="fas fa-user-friends"></i> Amigos</li>
+
+      <li id="drawerSubscriptions" style="display:none"><i class="fas fa-tag"></i> Suscripciones</li>
+
+
+      <li id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <div style="display:flex;gap:12px;align-items:center;width:100%;max-width:980px;">
+      <div class="section-title" id="sectionTitle">Materiales</div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <!-- quick stats / achievements summary -->
+        <div class="card" id="miniAchievements" style="display:flex;align-items:center;gap:12px;padding:10px">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 4.8L20 8l-4 3.6L17 20l-5-2.6L7 20l1-8.4L4 8l5.6-1.2L12 2z" fill="#FFD400"></path></svg>
+          <div>
+            <div style="font-weight:700" id="miniScore">Puntos: 0</div>
+            <div style="font-size:12px;color:var(--muted)" id="miniProgress">0 preguntas hoy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Achievements inline panel (shows when asked) -->
+    <div class="card achievements-panel" id="achievementsPanel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:800;color:var(--duo-dark)">Mis Logros</div>
+        <div style="font-size:13px;color:var(--muted)" id="achievementsDate">Hoy</div>
+      </div>
+      <div id="achievementsContent" class="mt-8">
+        <p style="color:var(--muted)">No has realizado actividades aún.</p>
+      </div>
+    </div>
+
+    <!-- Ranking card (shows in main) -->
+    <div class="card ranking-card" id="rankingCard" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:800;color:var(--duo-dark)">Ranking Diario</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn secondary" id="refreshRanking">Actualizar</button>
+        </div>
+      </div>
+      <div id="rankingList" class="mt-8"></div>
+    </div>
+
+<!-- Friends card -->
+<div class="card" id="friendsCard" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:800;color:var(--duo-dark)">Amigos</div>
+    <div>
+      <button class="btn secondary" id="refreshFriends">Actualizar</button>
+    </div>
+  </div>
+  <div id="friendsList" class="mt-8"></div>
+</div>
+
+<!-- Subscriptions card (solo visible para profes) -->
+<div class="card" id="subscriptionsCard" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:800;color:var(--duo-dark)">Suscripciones</div>
+    <div style="font-size:13px;color:var(--muted)">Alumnos suscritos</div>
+  </div>
+
+  <div id="subscriptionsList" class="mt-8" style="margin-top:12px">
+    <p style="color:var(--muted)">Sin datos.</p>
+  </div>
+</div>
+
+
+<!-- SIMULACRO: sección para programar y ejecutar simulacros -->
+<div class="card simulacro-card" id="simulacroCard" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:800;color:var(--duo-dark)">Simulacro</div>
+    <div style="font-size:13px;color:var(--muted)">Programa tu simulacro y añade al calendario</div>
+  </div>
+
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr;gap:12px">
+    <div>
+      <label for="simDateTime">Fecha y hora de inicio</label>
+      <input id="simDateTime" type="datetime-local" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e6e6e6" />
+    </div>
+
+    <div>
+      <label for="simEmail">Correo (usa el correo con el que te registraste)</label>
+      <input id="simEmail" type="email" placeholder="tu@correo.com" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e6e6e6" />
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn primary" id="scheduleSimBtn">Programar simulacro</button>
+      <button class="btn" id="startSimBtn">Iniciar simulacro ahora (3 preguntas)</button>
+    </div>
+
+    <div>
+      <div style="font-weight:700;margin-top:6px">Mis simulacros programados</div>
+      <div id="scheduledList" style="margin-top:8px;color:var(--muted)">Sin simulacros.</div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- DOCENTES: lista de profesores (insertar en main-content) -->
+<div class="card professors-panel" id="professorsCard" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div style="font-weight:800;color:var(--duo-dark)">Docentes</div>
+    <div style="font-size:13px;color:var(--muted)" id="professorsInfo">Información de profesores</div>
+  </div>
+
+  <div id="professorsList" class="mt-8" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+    <!-- cards renderizadas por JS -->
+  </div>
+</div>
+
+
+    <!-- Main quiz container preview (entry) -->
+    <div class="card" id="homeCard">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <div>
+          <div style="font-weight:800;color:var(--duo-dark)">Bienvenido</div>
+          <div style="color:var(--muted);font-size:13px" id="welcomeText">Explora materiales o inicia una prueba.</div>
+        </div>
+        <div>
+          <button class="btn" id="startQuizBtn" style="cursor:pointer">Iniciar Prueba</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CONTAINER MOVIDO FUERA DE main-content para que no se oculte por heredado -->
+  <div class="quiz-container card" id="quizContainer" style="display:none"></div>
+
+  <!-- Bottom nav -->
+  <div class="bottom-nav" id="bottomNav">
+    <div class="nav-item active" data-section="Materiales">
+      <i class="fas fa-book"></i><span>Materiales</span>
+    </div>
+
+<div class="nav-item" data-section="Docentes" id="docentesNavItem">
+  <i class="fas fa-chalkboard-teacher"></i><span>Docentes</span>
+</div>
+
+
+<div class="nav-item" data-section="Simulacro">
+  <i class="fas fa-brain"></i><span>Simulacro</span>
+</div>
+
+
+
+    <div class="nav-item" data-section="Tarjetas de estudio">
+      <i class="fas fa-sticky-note"></i><span>Tarjetas</span>
+    </div>
+    <div class="nav-item" data-section="Prueba" id="quizNavItem">
+      <i class="fas fa-question-circle"></i><span>Prueba</span>
+    </div>
+  </div>
+
+
+<!-- REEMPLAZAR modal profileModal por este bloque -->
+<div class="modal" id="profileModal" aria-hidden="true" role="dialog" aria-labelledby="profileTitle">
+  <div class="modal-content">
+    <span class="close" id="closeProfile" aria-label="Cerrar">×</span>
+    <h2 id="profileTitle">Editar Perfil</h2>
+
+    <!-- fila con preview + inputs -->
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px">
+      <!-- Avatar PREVIEW: soporta modo profesor (marco animado) -->
+      <div id="avatarPreviewWrapper" class="avatar-preview-normal" style="width:72px;height:72px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#f6fff6,#e6ffe6);display:flex;align-items:center;justify-content:center">
+        <div id="avatarPreview" style="width:72px;height:72px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center">
+          <div style="font-weight:700;color:#7b7b7b">?</div>
+        </div>
+      </div>
+
+      <div style="flex:1">
+        <div style="font-weight:800" id="profilePreviewName">Cargando...</div>
+        <div style="font-size:12px;color:var(--muted)" id="profilePreviewSub">Carrera • Nivel</div>
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button class="btn secondary" id="removeAvatarBtn" type="button">Eliminar avatar</button>
+          <button class="btn" type="button" id="uploadGalleryBtn">Subir desde galería</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- --- CAMPOS PARA ALUMNO (por defecto) --- -->
+    <div id="studentFields">
+      <div class="form-group">
+        <label for="editFirstName">Nombres</label>
+        <input type="text" id="editFirstName" placeholder="Ej: Juan Carlos" autocomplete="given-name">
+      </div>
+
+      <div class="form-group">
+        <label for="editLastName">Apellidos</label>
+        <input type="text" id="editLastName" placeholder="Ej: Pérez Gómez" autocomplete="family-name">
+      </div>
+
+      <div class="form-group">
+        <label for="editCareer">Carrera</label>
+        <input type="text" id="editCareer" placeholder="Ej: Ingeniería de Sistemas" autocomplete="organization">
+      </div>
+
+      <div class="form-group">
+        <label for="editLevel">Nivel</label>
+        <select id="editLevel">
+          <option value="">Selecciona tu nivel</option>
+          <option value="1">1er año</option>
+          <option value="2">2do año</option>
+          <option value="3">3er año</option>
+          <option value="4">4to año</option>
+          <option value="5">5to año</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- --- CHECKBOX para indicar profesor --- -->
+    <div class="form-group" style="display:flex;flex-direction:column;gap:6px">
+      <label for="editIsProfessor">¿Eres profesor?</label>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="editIsProfessor" />
+        <small id="profNote" style="color:var(--muted)">Marca si eres profesor (se requiere correo autorizado)</small>
+      </div>
+    </div>
+
+    <!-- --- CAMPOS para PROFESOR (ocultos por defecto) --- -->
+    <div id="profFields" style="display:none">
+      <div class="prof-field">
+        <label for="editProfessorName">Nombre profesional (mostrar)</label>
+        <input id="editProfessorName" placeholder="Ej: Dr. Juan Pérez" />
+      </div>
+
+      <div class="prof-field">
+        <label for="editSpecialty">Especialidad</label>
+        <input id="editSpecialty" placeholder="Ej: Ingeniería de Software, Matemáticas" />
+      </div>
+
+      <div class="prof-field">
+        <label for="editDepartment">Departamento / Facultad</label>
+        <input id="editDepartment" placeholder="Ej: Facultad de Ciencias" />
+      </div>
+
+      <div class="prof-field">
+        <label for="editOfficeHours">Horarios de atención (opcional)</label>
+        <input id="editOfficeHours" placeholder="Ej: Lun 10:00-12:00, Mié 14:00-16:00" />
+      </div>
+
+      <div class="prof-field">
+        <label for="editBio">Breve descripción / especialización</label>
+        <textarea id="editBio" rows="3" placeholder="Máx. 200 caracteres"></textarea>
+      </div>
+    </div>
+
+    <!-- Avatares por defecto (se mantienen) -->
+    <div class="form-group">
+      <label>Seleccionar avatar por defecto</label>
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="defaultAvatars">
+        <!-- avatars renderizados por JS -->
+      </div>
+    </div>
+
+    <!-- input file (oculto visualmente porque usamos el botón "Subir desde galería") -->
+    <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button class="btn secondary" id="cancelProfile">Cancelar</button>
+      <button class="btn" id="saveProfile">Guardar</button>
+    </div>
+  </div>
+</div>
+
+
+
+  <div class="modal" id="messagesModal">
+    <div class="modal-content">
+      <span class="close" id="closeMessages">×</span>
+      <h2>Mensajes Privados</h2>
+      <div id="messagesList">No tienes mensajes nuevos.</div>
+    </div>
+  </div>
+
+  <div class="modal" id="onlineUsersModal">
+    <div class="modal-content">
+      <span class="close" id="closeOnline">×</span>
+      <h2>Usuarios en línea</h2>
+
+      <!-- BUSCADOR: buscar por nombre o apellido -->
+      <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center">
+        <input id="onlineSearchInput" type="search" placeholder="Buscar por nombre o apellido..." 
+               style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6e6e6" aria-label="Buscar usuarios en línea" />
+        <button id="onlineSearchClear" class="btn small secondary" type="button" aria-label="Limpiar búsqueda">Limpiar</button>
+      </div>
+
+      <div id="onlineList">Cargando...</div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <span class="close" id="closeSettings">×</span>
+      <h2>Configuración</h2>
+      <div class="form-group">
+        <label>Dificultad</label>
+        <select id="difficultySelect">
+          <option value="easy">Fácil</option>
+          <option value="medium">Normal</option>
+          <option value="hard">Avanzado</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn secondary" id="cancelSettings">Cancelar</button>
+        <button class="btn" id="saveSettings">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="rankingModal">
+    <div class="modal-content">
+      <span class="close" id="closeRanking">×</span>
+      <h2>Ranking Diario</h2>
+      <div id="rankingListModal">Cargando...</div>
+    </div>
+  </div>
+
+  <!-- Hidden audio -->
+  <audio id="correctSound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-correct-answer-950.mp3"></audio>
+  <audio id="applauseSound" src="https://assets.mixkit.co/sfx/preview/mixkit-crowd-applause-482.mp3"></audio>
+  <audio id="wrongSound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+  <audio id="nextSound" src="https://assets.mixkit.co/sfx/preview/mixkit-fast-finger-click-2765.mp3"></audio>
+
+  <!-- Toast container -->
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <!-- Confetti canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Firebase (no storage) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <!-- SCRIPTS -->
+  <!-- script.js contiene utilidades y el lugar para pegar JS (o cargar extra.js) -->
+  <script src="script.js" defer></script>
+
+  <!-- Si prefieres mantener tu código en extra.js, carga extra.js después del principal:
+  <script src="extra.js" defer></script>
+  -->
+
+  <!-- Nota: si tu código necesita ejecutar algo inmediatamente antes de load,
+       puedes añadir un pequeño bloque inline aquí. -->
+</body>
+</html>
